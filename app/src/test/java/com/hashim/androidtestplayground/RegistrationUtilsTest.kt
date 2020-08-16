@@ -40,7 +40,7 @@ class RegistrationUtilsTest {
     fun `user name exists return false`() {
 
         val hResult = RegistrationUtils.hValidateRegistrationInput(
-            "hashim",
+            "Carl",
             "123",
             "123"
         )

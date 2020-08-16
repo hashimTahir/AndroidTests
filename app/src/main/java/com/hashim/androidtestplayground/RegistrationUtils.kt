@@ -5,7 +5,8 @@
 package com.hashim.androidtestplayground
 
 object RegistrationUtils {
-val  hExistingUser = listOf("Hashim","Carl")
+   private val hExistingUser = listOf("Hashim", "Carl")
+
     /*
     * ---- input is not valid if---
     *  if user/password is empty or null
@@ -20,6 +21,18 @@ val  hExistingUser = listOf("Hashim","Carl")
         confrimPassword: String
     ): Boolean {
 
+        if (userName.isEmpty() || password.isEmpty()) {
+            return false
+        }
+        if (userName in hExistingUser) {
+            return false
+        }
+        if (!password.equals(confrimPassword)) {
+            return false
+        }
+        if (password.length < 2) {
+            return false
+        }
         return true
     }
 
