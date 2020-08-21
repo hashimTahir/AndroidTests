@@ -17,6 +17,7 @@ class ResourseComparerTest {
     @Before
     fun hSetup() {
         hResourseComparer = ResourseComparer()
+///*false commi*/
 
     }
 
