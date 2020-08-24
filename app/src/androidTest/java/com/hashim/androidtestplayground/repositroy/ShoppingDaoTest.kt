@@ -54,17 +54,34 @@ class ShoppingDaoTest {
 
 
     @Test
-    fun name() = runBlockingTest {
-        var hShoppingItem = ShoppingItem(
+    fun insert_item() = runBlockingTest {
+        val hShoppingItem = ShoppingItem(
             "name", 100, 30F, "url", 1
         )
         hShoppingDao.hInsertShoppingItem(hShoppingItem)
 
-        var hDbItemsList = hShoppingDao.hGetAllShoppingItems().getOrAwaitValue()
+        val hDbItemsList = hShoppingDao.hGetAllShoppingItems().getOrAwaitValue()
 
 
 
         Truth.assertThat(hDbItemsList).contains(hShoppingItem)
+
+    }
+
+    @Test
+    fun delete_item() {
+        runBlockingTest {
+            val hShoppingItem = ShoppingItem(
+                "name", 100, 30F, "url", 1
+            )
+            hShoppingDao.hInsertShoppingItem(hShoppingItem)
+
+            hShoppingDao.hDeleteShoppingItem(hShoppingItem)
+
+            val hDbItemsList = hShoppingDao.hGetAllShoppingItems().getOrAwaitValue()
+
+            Truth.assertThat(hDbItemsList).doesNotContain(hShoppingItem)
+        }
 
     }
 }
