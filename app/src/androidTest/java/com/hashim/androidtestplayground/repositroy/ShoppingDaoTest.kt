@@ -54,7 +54,7 @@ class ShoppingDaoTest {
 
 
     @Test
-    fun insert_item() = runBlockingTest {
+    fun insert_item_test() = runBlockingTest {
         val hShoppingItem = ShoppingItem(
             "name", 100, 30F, "url", 1
         )
@@ -69,7 +69,7 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun delete_item() {
+    fun delete_item_test() {
         runBlockingTest {
             val hShoppingItem = ShoppingItem(
                 "name", 100, 30F, "url", 1
@@ -82,6 +82,28 @@ class ShoppingDaoTest {
 
             Truth.assertThat(hDbItemsList).doesNotContain(hShoppingItem)
         }
+    }
 
+    @Test
+    fun total_price_test() {
+        runBlockingTest {
+            val hShoppingItem1 = ShoppingItem(
+                "name", 5, 30.5F, "url", 1
+            )
+            val hShoppingItem2 = ShoppingItem(
+                "name", 10, 40F, "url", 2
+            )
+            val hShoppingItem3 = ShoppingItem(
+                "name", 0, 50F, "url", 3
+            )
+
+            hShoppingDao.hInsertShoppingItem(hShoppingItem1)
+            hShoppingDao.hInsertShoppingItem(hShoppingItem2)
+            hShoppingDao.hInsertShoppingItem(hShoppingItem3)
+
+            val hPrice = hShoppingDao.hGetTotalPriceItems().getOrAwaitValue()
+
+            Truth.assertThat(hPrice).isEqualTo(5 * 30.5F + 10 * 40F + 0 * 50F)
+        }
     }
 }
