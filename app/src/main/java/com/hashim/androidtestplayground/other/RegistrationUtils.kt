@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2020/  8/ 16.  Created by Hashim Tahir
+ * Copyright (c) 2020/  10/ 5.  Created by Hashim Tahir
  */
 
-package com.hashim.androidtestplayground
+package com.hashim.androidtestplayground.other
 
 object RegistrationUtils {
    private val hExistingUser = listOf("Hashim", "Carl")

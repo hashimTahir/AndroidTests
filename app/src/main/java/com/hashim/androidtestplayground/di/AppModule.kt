@@ -6,7 +6,7 @@ package com.hashim.androidtestplayground.di
 
 import android.content.Context
 import androidx.room.Room
-import com.hashim.androidtestplayground.Constants
+import com.hashim.androidtestplayground.other.Constants
 import com.hashim.androidtestplayground.repository.local.ShoppinDatabase
 import com.hashim.androidtestplayground.repository.local.ShoppingDao
 import com.hashim.androidtestplayground.repository.remote.PixarbayApi

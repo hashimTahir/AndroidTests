@@ -2,7 +2,7 @@
  * Copyright (c) 2020/  8/ 21.  Created by Hashim Tahir
  */
 
-package com.hashim.androidtestplayground
+package com.hashim.androidtestplayground.other
 
 import android.content.Context
 

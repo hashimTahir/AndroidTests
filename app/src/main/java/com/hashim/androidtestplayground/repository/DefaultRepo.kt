@@ -5,34 +5,52 @@
 package com.hashim.androidtestplayground.repository
 
 import androidx.lifecycle.LiveData
+import com.hashim.androidtestplayground.other.Constants
+import com.hashim.androidtestplayground.other.Resource
 import com.hashim.androidtestplayground.repository.local.ShoppingDao
 import com.hashim.androidtestplayground.repository.local.ShoppingItem
 import com.hashim.androidtestplayground.repository.remote.PixarbayApi
 import com.hashim.androidtestplayground.repository.remote.models.ImageResponse
-import retrofit2.Response
 import javax.inject.Inject
 
 class DefaultRepo @Inject constructor(
     private val hShoppingDao: ShoppingDao,
     private val hPixarbayApi: PixarbayApi
-):DefaultRepoImpl {
+) : DefaultRepoImpl {
     override suspend fun hInsertShoppingItem(shoppingItem: ShoppingItem) {
-        TODO("Not yet implemented")
+        hShoppingDao.hInsertShoppingItem(shoppingItem)
     }
 
     override suspend fun hDeleteShoppingItem(shoppingItem: ShoppingItem) {
-        TODO("Not yet implemented")
+        hShoppingDao.hDeleteShoppingItem(shoppingItem)
     }
 
     override fun hGetAllShoppingItems(): LiveData<List<ShoppingItem>> {
-        TODO("Not yet implemented")
+        return hShoppingDao.hGetAllShoppingItems()
     }
 
     override fun hGetTotalPriceItems(): LiveData<Float> {
-        TODO("Not yet implemented")
+        return hShoppingDao.hGetTotalPriceItems()
     }
 
-    override suspend fun hSearchImages(searchQuery: String): Response<ImageResponse> {
-        TODO("Not yet implemented")
+    override suspend fun hSearchImages(searchQuery: String): Resource<ImageResponse> {
+        return try {
+            val hResponse =
+                hPixarbayApi.hSearchImages(
+                    searchQuery,
+                    Constants.H_PIXARBAY_API_KEY
+                )
+            if (hResponse.isSuccessful) {
+                hResponse.body()?.let {
+                    Resource.success(it)
+                } ?: Resource.error("An unknown error occurerd", null)
+
+            } else {
+                Resource.error("An unknown error occurerd", null)
+            }
+
+        } catch (e: Exception) {
+            Resource.error("Could'nt reach server, check your internet connection", null)
+        }
     }
 }

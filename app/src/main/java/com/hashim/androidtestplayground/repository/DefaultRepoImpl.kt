@@ -5,12 +5,14 @@
 package com.hashim.androidtestplayground.repository
 
 import androidx.lifecycle.LiveData
+import com.hashim.androidtestplayground.other.Resource
 import com.hashim.androidtestplayground.repository.local.ShoppingItem
 import com.hashim.androidtestplayground.repository.remote.models.ImageResponse
 import retrofit2.Response
 
 interface DefaultRepoImpl {
 
+    /*local repo functions*/
     suspend fun hInsertShoppingItem(shoppingItem: ShoppingItem)
 
     suspend fun hDeleteShoppingItem(shoppingItem: ShoppingItem)
@@ -20,8 +22,9 @@ interface DefaultRepoImpl {
     fun hGetTotalPriceItems(): LiveData<Float>
 
 
+    /*Remote repo functions*/
     suspend fun hSearchImages(
         searchQuery: String
-    ): Response<ImageResponse>
+    ): Resource<ImageResponse>
 
 }
