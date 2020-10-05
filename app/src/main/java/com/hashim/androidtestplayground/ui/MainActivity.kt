@@ -1,11 +1,12 @@
 /*
- * Copyright (c) 2020/  8/ 13.  Created by Hashim Tahir
+ * Copyright (c) 2020/  10/ 5.  Created by Hashim Tahir
  */
 
-package com.hashim.androidtestplayground
+package com.hashim.androidtestplayground.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.hashim.androidtestplayground.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
