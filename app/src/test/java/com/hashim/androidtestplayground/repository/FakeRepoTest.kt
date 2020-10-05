@@ -6,9 +6,9 @@ package com.hashim.androidtestplayground.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.hashim.androidtestplayground.other.Resource
 import com.hashim.androidtestplayground.repository.local.ShoppingItem
 import com.hashim.androidtestplayground.repository.remote.models.ImageResponse
-import retrofit2.Response
 
 /*Simulates the behaviour of Real repo in tests for view models*/
 class FakeRepoTest : DefaultRepoImpl {
@@ -55,7 +55,13 @@ class FakeRepoTest : DefaultRepoImpl {
         return hShoppingItemPriceMLD
     }
 
-    override suspend fun hSearchImages(searchQuery: String): Response<ImageResponse> {
-        TODO("Not yet implemented")
+    override suspend fun hSearchImages(searchQuery: String): Resource<ImageResponse> {
+        return if (hShouldReturnNetworkError) {
+            Resource.error("Error", null)
+        } else {
+            Resource.success(ImageResponse(listOf(), 0, 0))
+        }
     }
+
+
 }
