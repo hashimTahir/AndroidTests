@@ -61,7 +61,6 @@ object AppModule {
         hPixarbayApi: PixarbayApi
     ): DefaultRepoImpl {
         return DefaultRepo(hShoppingDao, hPixarbayApi)
-
     }
 
 

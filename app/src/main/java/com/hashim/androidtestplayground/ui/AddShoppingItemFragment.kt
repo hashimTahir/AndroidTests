@@ -4,9 +4,8 @@
 
 package com.hashim.androidtestplayground.ui
 
-import androidx.fragment.app.Fragment
 import com.hashim.androidtestplayground.R
 
-class AddShoppingItemFragment : Fragment(R.layout.frament_add_shopping_item) {
+class AddShoppingItemFragment() : BaseFragment(R.layout.frament_add_shopping_item) {
 
 }
