@@ -6,12 +6,18 @@ package com.hashim.androidtestplayground.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.hashim.androidtestplayground.R
+import com.hashim.androidtestplayground.adapters.ImageAdapter
 import com.hashim.androidtestplayground.viewmodel.ShoppingViewModel
+import kotlinx.android.synthetic.main.frament_pick_image.*
+import javax.inject.Inject
 
-class PickImageFragment : BaseFragment(R.layout.frament_pick_image) {
+class PickImageFragment @Inject constructor(
+     val hImageAdapter: ImageAdapter
+) : BaseFragment(R.layout.frament_pick_image) {
     lateinit var hShoppingViewModel: ShoppingViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -19,7 +25,19 @@ class PickImageFragment : BaseFragment(R.layout.frament_pick_image) {
         hShoppingViewModel = ViewModelProvider(requireActivity())
             .get(ShoppingViewModel::class.java)
 
+
+        hImageAdapter.setOnItemClickListener {
+            findNavController().popBackStack()
+            hShoppingViewModel.hSetImageUrl(it)
+        }
+
     }
 
+    private fun hSetupRecyclerView() {
+        rvImages.apply {
+            adapter = hImageAdapter
+            layoutManager = GridLayoutManager(requireContext(), 4)
+        }
+    }
 
 }
