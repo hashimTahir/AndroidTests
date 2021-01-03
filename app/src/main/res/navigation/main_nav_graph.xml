@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021/  1/ 3.  Created by Hashim Tahir
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_nav_graph"
+    app:startDestination="@id/shoppingFragment">
+
+    <fragment
+        android:id="@+id/shoppingFragment"
+        android:name="com.hashim.androidtestplayground.ui.ShoppingFragment"
+        android:label="ShoppingFragment" >
+        <action
+            android:id="@+id/action_shoppingFragment_to_addShoppingItemFragment"
+            app:destination="@id/addShoppingItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addShoppingItemFragment"
+        android:name="com.hashim.androidtestplayground.ui.AddShoppingItemFragment"
+        android:label="AddShoppingItemFragment" >
+        <action
+            android:id="@+id/action_addShoppingItemFragment_to_pickImageFragment"
+            app:destination="@id/pickImageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pickImageFragment"
+        android:name="com.hashim.androidtestplayground.ui.PickImageFragment"
+        android:label="PickImageFragment" />
+</navigation>

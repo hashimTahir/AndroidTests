@@ -45,7 +45,7 @@ class ShoppingViewModel @ViewModelInject constructor(
     /*************************Functions*****************************************/
 //////////////////////////////////////////////////////////////////////////////////
 
-    private fun hSetImageUrl(url: String) {
+    fun hSetImageUrl(url: String) {
         hImageUrlMLD.value = url
     }
 

@@ -58,14 +58,6 @@ class ShoppingDaoTest {
         hShoppinDatabase.close()
     }
 
-
-    @Test
-    fun testLaunchFragmentInHiltContainer() {
-        launchFragmentInHiltContainer<ShoppingFragment> {
-
-        }
-    }
-
     @Test
     fun insert_item_test() = runBlockingTest {
         val hShoppingItem = ShoppingItem(
