@@ -5,6 +5,7 @@
 package com.hashim.androidtestplayground
 
 import android.app.Application
+import com.hashim.androidtestplayground.other.Constants
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

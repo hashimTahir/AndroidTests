@@ -5,23 +5,52 @@
 package com.hashim.androidtestplayground.repository
 
 import androidx.lifecycle.LiveData
+import com.hashim.androidtestplayground.other.Constants
+import com.hashim.androidtestplayground.other.Resource
+import com.hashim.androidtestplayground.repository.local.ShoppingDao
 import com.hashim.androidtestplayground.repository.local.ShoppingItem
+import com.hashim.androidtestplayground.repository.remote.PixarbayApi
 import com.hashim.androidtestplayground.repository.remote.models.ImageResponse
-import retrofit2.Response
+import javax.inject.Inject
 
-interface DefaultRepoImpl {
+class DefaultRepoImpl @Inject constructor(
+    private val hShoppingDao: ShoppingDao,
+    private val hPixarbayApi: PixarbayApi
+) : DefaultRepository {
+    override suspend fun hInsertShoppingItem(shoppingItem: ShoppingItem) {
+        hShoppingDao.hInsertShoppingItem(shoppingItem)
+    }
 
-    suspend fun hInsertShoppingItem(shoppingItem: ShoppingItem)
+    override suspend fun hDeleteShoppingItem(shoppingItem: ShoppingItem) {
+        hShoppingDao.hDeleteShoppingItem(shoppingItem)
+    }
 
-    suspend fun hDeleteShoppingItem(shoppingItem: ShoppingItem)
+    override fun hGetAllShoppingItems(): LiveData<List<ShoppingItem>> {
+        return hShoppingDao.hGetAllShoppingItems()
+    }
 
-    fun hGetAllShoppingItems(): LiveData<List<ShoppingItem>>
+    override fun hGetTotalPriceItems(): LiveData<Float> {
+        return hShoppingDao.hGetTotalPriceItems()
+    }
 
-    fun hGetTotalPriceItems(): LiveData<Float>
+    override suspend fun hSearchImages(searchQuery: String): Resource<ImageResponse> {
+        return try {
+            val hResponse =
+                hPixarbayApi.hSearchImages(
+                    searchQuery,
+                    Constants.H_PIXARBAY_API_KEY
+                )
+            if (hResponse.isSuccessful) {
+                hResponse.body()?.let {
+                    Resource.success(it)
+                } ?: Resource.error("An unknown error occurerd", null)
 
+            } else {
+                Resource.error("An unknown error occurerd", null)
+            }
 
-    suspend fun hSearchImages(
-        searchQuery: String
-    ): Response<ImageResponse>
-
+        } catch (e: Exception) {
+            Resource.error("Could'nt reach server, check your internet connection", null)
+        }
+    }
 }

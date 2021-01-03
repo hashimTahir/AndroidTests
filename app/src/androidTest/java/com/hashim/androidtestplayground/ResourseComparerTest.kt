@@ -7,6 +7,7 @@ package com.hashim.androidtestplayground
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth;
+import com.hashim.androidtestplayground.other.ResourseComparer
 import org.junit.Before
 import org.junit.Test
 

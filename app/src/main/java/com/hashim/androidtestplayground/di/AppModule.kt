@@ -6,21 +6,26 @@ package com.hashim.androidtestplayground.di
 
 import android.content.Context
 import androidx.room.Room
-import com.hashim.androidtestplayground.Constants
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.hashim.androidtestplayground.R
+import com.hashim.androidtestplayground.other.Constants
+import com.hashim.androidtestplayground.repository.DefaultRepoImpl
+import com.hashim.androidtestplayground.repository.DefaultRepository
 import com.hashim.androidtestplayground.repository.local.ShoppinDatabase
 import com.hashim.androidtestplayground.repository.local.ShoppingDao
 import com.hashim.androidtestplayground.repository.remote.PixarbayApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Singleton
@@ -51,6 +56,26 @@ object AppModule {
             .build()
             .create(PixarbayApi::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun hProvidesDefaultRepo(
+        hShoppingDao: ShoppingDao,
+        hPixarbayApi: PixarbayApi
+    ): DefaultRepository {
+        return DefaultRepoImpl(hShoppingDao, hPixarbayApi)
+    }
+
+
+    @Singleton
+    @Provides
+    fun hProvideGlideInstance(
+        @ApplicationContext context: Context
+    ) = Glide.with(context).setDefaultRequestOptions(
+        RequestOptions()
+            .placeholder(R.drawable.ic_image)
+            .error(R.drawable.ic_image)
+    )
 
 
 }

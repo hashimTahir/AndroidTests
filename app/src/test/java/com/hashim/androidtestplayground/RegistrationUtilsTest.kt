@@ -5,6 +5,7 @@
 package com.hashim.androidtestplayground
 
 import com.google.common.truth.Truth.assertThat
+import com.hashim.androidtestplayground.other.RegistrationUtils
 import org.junit.Test
 
 

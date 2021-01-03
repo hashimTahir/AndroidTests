@@ -5,45 +5,51 @@
 package com.hashim.androidtestplayground.repositroy
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.google.common.truth.Truth
 import com.hashim.androidtestplayground.getOrAwaitValue
+import com.hashim.androidtestplayground.launchFragmentInHiltContainer
 import com.hashim.androidtestplayground.repository.local.ShoppinDatabase
 import com.hashim.androidtestplayground.repository.local.ShoppingDao
 import com.hashim.androidtestplayground.repository.local.ShoppingItem
+import com.hashim.androidtestplayground.ui.ShoppingFragment
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import javax.inject.Inject
+import javax.inject.Named
 
 
 /*Live data is synchronours by default which causes the test to fail even with
 * run blocking Test  so make it run successfully we have to tell the junit to run
 * each test one after another which is done by specifying a rule for junit*/
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4ClassRunner::class)
+@HiltAndroidTest
 @SmallTest
 class ShoppingDaoTest {
 
     @get:Rule
+    var hHiltRule = HiltAndroidRule(this)
+
+
+    @get:Rule
     var hInstantTaskExecutorRule = InstantTaskExecutorRule()
-    private lateinit var hShoppinDatabase: ShoppinDatabase
+
+    @Inject
+    @Named("test_db")
+    lateinit var hShoppinDatabase: ShoppinDatabase
+
+
     private lateinit var hShoppingDao: ShoppingDao
 
     @Before
     fun setup() {
-        hShoppinDatabase = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            ShoppinDatabase::class.java,
-        )
-            .allowMainThreadQueries()
-            .build()
+        hHiltRule.inject()
         hShoppingDao = hShoppinDatabase.hGetShoppingDao()
     }
 
@@ -51,7 +57,6 @@ class ShoppingDaoTest {
     fun teardown() {
         hShoppinDatabase.close()
     }
-
 
     @Test
     fun insert_item_test() = runBlockingTest {
