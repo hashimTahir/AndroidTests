@@ -5,14 +5,14 @@
 package com.hashim.androidtestplayground.repositroy
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth
 import com.hashim.androidtestplayground.getOrAwaitValue
+import com.hashim.androidtestplayground.launchFragmentInHiltContainer
 import com.hashim.androidtestplayground.repository.local.ShoppinDatabase
 import com.hashim.androidtestplayground.repository.local.ShoppingDao
 import com.hashim.androidtestplayground.repository.local.ShoppingItem
+import com.hashim.androidtestplayground.ui.ShoppingFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -49,7 +49,7 @@ class ShoppingDaoTest {
 
     @Before
     fun setup() {
-      hHiltRule.inject()
+        hHiltRule.inject()
         hShoppingDao = hShoppinDatabase.hGetShoppingDao()
     }
 
@@ -58,6 +58,13 @@ class ShoppingDaoTest {
         hShoppinDatabase.close()
     }
 
+
+    @Test
+    fun testLaunchFragmentInHiltContainer() {
+        launchFragmentInHiltContainer<ShoppingFragment> {
+
+        }
+    }
 
     @Test
     fun insert_item_test() = runBlockingTest {
