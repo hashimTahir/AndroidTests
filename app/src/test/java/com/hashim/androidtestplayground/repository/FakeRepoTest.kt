@@ -11,7 +11,7 @@ import com.hashim.androidtestplayground.repository.local.ShoppingItem
 import com.hashim.androidtestplayground.repository.remote.models.ImageResponse
 
 /*Simulates the behaviour of Real repo in tests for view models*/
-class FakeRepoTest : DefaultRepoImpl {
+class FakeRepoTest : DefaultRepository {
 
     private val hShoppinItemList = mutableListOf<ShoppingItem>()
 

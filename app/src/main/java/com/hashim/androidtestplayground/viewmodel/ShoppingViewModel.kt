@@ -12,13 +12,13 @@ import androidx.lifecycle.viewModelScope
 import com.hashim.androidtestplayground.other.Constants
 import com.hashim.androidtestplayground.other.Event
 import com.hashim.androidtestplayground.other.Resource
-import com.hashim.androidtestplayground.repository.DefaultRepoImpl
+import com.hashim.androidtestplayground.repository.DefaultRepository
 import com.hashim.androidtestplayground.repository.local.ShoppingItem
 import com.hashim.androidtestplayground.repository.remote.models.ImageResponse
 import kotlinx.coroutines.launch
 
 class ShoppingViewModel @ViewModelInject constructor(
-    private val hDefaultRepo: DefaultRepoImpl
+    private val hDefaultRepo: DefaultRepository
 ) : ViewModel() {
     /*Live Data to hold the values from the db*/
     val hShoppingItemsListLD = hDefaultRepo.hGetAllShoppingItems()
